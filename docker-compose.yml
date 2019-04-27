@@ -1,14 +1,18 @@
 version: '3'
-service:
-  api:
-    image: shinn1r0/responder-template
-    port:
-      - "80:5042"
+services:
+  nginx_proxy:
+    hostname: nginx_proxy
+    image: nginx:latest
+    ports:
+      - "80:80"
     volumes:
-      - ".:/app"
-    work_dir: /app
-    tty: true
-    environment:
-      TZ: Asia/Tokyo
-    command: python /app/src/api/api.py
-    restart: always
+      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "./nginx/conf.d:/etc/nginx/conf.d"
+  responder:
+    build: ./app
+    image: shinn1r0/responder-template
+    expose:
+      - "80"
+    command: /bin/sh -c "python /root/app/src/run.py"
+    volumes:
+      - "./app:/root/app"

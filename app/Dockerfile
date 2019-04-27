@@ -1,7 +1,6 @@
 FROM python:latest
 LABEL maintainer="shinichir0 <github@shinichironaito.com>"
 
-EXPOSE 5042
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
@@ -24,8 +23,4 @@ RUN rm NotoSansCJKjp-hinted.zip
 RUN apt-get install fontconfig
 RUN fc-cache -f
 
-RUN set -ex && mkdir /app
-
-WORKDIR /app
-
-ENV PYTHONPATH "/app:${PYTHONPATH}"
+WORKDIR /root
