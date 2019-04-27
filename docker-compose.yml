@@ -1,0 +1,14 @@
+version: '3'
+service:
+  api:
+    image: shinn1r0/responder-template
+    port:
+      - "80:5042"
+    volumes:
+      - ".:/app"
+    work_dir: /app
+    tty: true
+    environment:
+      TZ: Asia/Tokyo
+    command: python /app/src/api/api.py
+    restart: always
